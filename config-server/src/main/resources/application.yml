@@ -1,0 +1,20 @@
+server:
+  port: 8085
+spring:
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: false
+        git:
+          uri: https://github.com/varya1441/spring_cloud_test_project
+          search-paths:
+          - 'config-dir/{application}/{profile}'
+
+  application:
+    name: config-server
+
+  security:
+    user:
+      name: var
+      password: var
