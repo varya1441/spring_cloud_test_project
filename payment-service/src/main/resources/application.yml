@@ -1,0 +1,21 @@
+server:
+  port: 8082
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+
+
+ribbon:
+  OkToRetryOnAllOperations: true
+  ReadTimeout: 3000000
+  ConnectTimeout: 3000000
+  MaxAutoRetries: 3
+  MaxAutoRetriesNextServer: 3
+  eureka:
+    enabled: true

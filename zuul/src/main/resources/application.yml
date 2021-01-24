@@ -1,0 +1,25 @@
+
+server:
+  port: 8086
+management:
+  security:
+    enabled: false
+
+spring:
+  application:
+    name: zuul-proxy
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${random.int}
+zuul:
+  routes:
+    firstvar:
+      path: /employee/**
+      serviceId: employee-service
+    secondvar:
+      path: /payment/**
+      serviceId: payment-service
