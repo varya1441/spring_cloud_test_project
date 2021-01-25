@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "employee")
@@ -20,6 +21,15 @@ public class Employee {
     private Status status;
     private OffsetDateTime hiringDate;
     private OffsetDateTime terminationDate;
-    private String departmentId;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Address> addresses;
+    @OneToMany(mappedBy = "employee")
+    private List<Compensation> compensations;
+
+    @ManyToOne
+    private Department department;
+    @ManyToOne
+    private Company company;
 
 }

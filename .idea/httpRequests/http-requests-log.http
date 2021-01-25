@@ -1,3 +1,7 @@
+GET http://localhost:9000/services/user
+
+###
+
 GET http://localhost:8081/nastya
 
 <> 2021-01-22T052339.401.json

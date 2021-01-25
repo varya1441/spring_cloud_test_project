@@ -20,4 +20,9 @@ public class Address {
     private Timestamp movingDate;
     private Timestamp leavingDate;
     private String zipCode;
+
+    @ManyToOne
+    private Employee employee;
+    @ManyToOne
+    private Company company;
 }

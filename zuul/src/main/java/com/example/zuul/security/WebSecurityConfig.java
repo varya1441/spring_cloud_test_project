@@ -1,4 +1,4 @@
-package com.example.userservice.security;
+package com.example.zuul.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;

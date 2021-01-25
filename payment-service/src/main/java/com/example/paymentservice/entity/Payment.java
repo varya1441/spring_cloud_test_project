@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @Data
@@ -13,7 +12,8 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private Integer wages;
-    private Object paymentMethod;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
     private Timestamp fromDate;
     private Timestamp toDate;
     private Integer workingHours;

@@ -16,5 +16,6 @@ public class Compensation {
     private Integer salaryPerHour;
     private Integer salaryPerWeek;
     private Integer salaryPerMonth;
-
+    @ManyToOne
+    private Employee employee;
 }

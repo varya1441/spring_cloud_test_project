@@ -2,6 +2,7 @@ package com.example.paymentservice.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -11,7 +12,8 @@ public class PaymentController {
     private String dpName;
 
     @RequestMapping("/")
-    public String getDbName() {
-        return dpName;
+    public String getDbName(Model m) {
+        m.addAttribute("welcome",dpName);
+        return "home";
     }
 }

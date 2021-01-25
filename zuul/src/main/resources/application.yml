@@ -17,9 +17,20 @@ eureka:
     instance-id: ${spring.application.name}:${random.int}
 zuul:
   routes:
-    firstvar:
+    employee:
       path: /employee/**
       serviceId: employee-service
-    secondvar:
+    payment:
       path: /payment/**
       serviceId: payment-service
+    auth:
+      path: /oauth/**
+      serviceId: auth-server
+security:
+  oauth2:
+    client:
+      clientId: var
+      clientSecret: var
+    resource:
+      userInfoUri: http://localhost:9000/user
+      tokenInfoUri: http://localhost:9000/services/oauth/check_token
