@@ -13,9 +13,9 @@ public class Compensation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private Timestamp effectiveDate;
-    private Integer salaryPerHour;
-    private Integer salaryPerWeek;
-    private Integer salaryPerMonth;
+    private Double salaryPerHour;
+    private Double salaryPerWeek;
+    private Double salaryPerMonth;
     @ManyToOne
     private Employee employee;
 }

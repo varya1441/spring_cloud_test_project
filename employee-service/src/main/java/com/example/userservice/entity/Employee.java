@@ -13,8 +13,10 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+    private String login;
     private String firstName;
     private String lastName;
+    private String password;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @Enumerated(EnumType.STRING)
