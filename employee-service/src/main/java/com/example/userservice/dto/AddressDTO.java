@@ -2,24 +2,24 @@ package com.example.userservice.dto;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 
+import javax.validation.constraints.NotNull;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Data
 public class AddressDTO {
-
-    private String id;
+    private UUID id;
     private String addressLine1;
     private String addressLine2;
     private String addressLine3;
     private String state;
     private String city;
-    private Timestamp movingDate;
-    private Timestamp leavingDate;
+    private OffsetDateTime movingDate;
+    private OffsetDateTime leavingDate;
     private String zipCode;
-    @NotNull
-    private String employeeId;
-    @NotNull
-    private String companyId;
+    @NotNull(message = "employee not found")
+    private UUID employeeId;
+    @NotNull(message = "company not found")
+    private UUID companyId;
 }

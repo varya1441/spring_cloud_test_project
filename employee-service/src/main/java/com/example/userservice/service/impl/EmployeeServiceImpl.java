@@ -1,6 +1,7 @@
 package com.example.userservice.service.impl;
 
 import com.example.userservice.dto.EmployeeDTO;
+import com.example.userservice.dto.payment.PaymentDTO;
 import com.example.userservice.entity.Company;
 import com.example.userservice.entity.Department;
 import com.example.userservice.entity.Employee;
@@ -9,32 +10,29 @@ import com.example.userservice.repository.EmployeeRepository;
 import com.example.userservice.service.CompanyService;
 import com.example.userservice.service.DepartmentService;
 import com.example.userservice.service.EmployeeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
-    private CompanyService companyService;
-    private DepartmentService departmentService;
+    private final CompanyService companyService;
+    private final DepartmentService departmentService;
 
-    @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper, CompanyServiceImpl companyService, DepartmentServiceImpl departmentService) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper, CompanyService companyService, DepartmentService departmentService) {
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
         this.companyService = companyService;
         this.departmentService = departmentService;
-    }
-
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
-        this.employeeRepository = employeeRepository;
-        this.employeeMapper = employeeMapper;
     }
 
     @Override
@@ -50,20 +48,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO saveEmployee(EmployeeDTO employeeDTO) {
         Employee employee = employeeMapper.mapToEntity(employeeDTO);
 
-        String departmentId = employee.getDepartment().getId();
+        UUID departmentId = employee.getDepartment().getId();
         Department department = departmentService.findDepartmentById(departmentId);
         employee.setDepartment(department);
 
-        String companyId = employee.getCompany().getId();
+        UUID companyId = employee.getCompany().getId();
         Company company = companyService.findCompanyById(companyId);
         employee.setCompany(company);
 
         Employee savedEmployee = employeeRepository.save(employee);
+        log.info("Company is saved");
+
         return employeeMapper.mapToDTO(savedEmployee);
     }
 
     @Override
-    public Employee findEmployeeById(String id) {
+    public Employee findEmployeeById(UUID id) {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Employee.class + "with id " + id));
     }
@@ -80,4 +80,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDTO;
     }
 
+    @Override
+    public void delete(UUID id) {
+        Employee user = employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Employee.class + " id " + id));
+        employeeRepository.delete(user);
+    }
+
+    @Override
+    public PaymentDTO getPayments() {
+        return null;
+    }
 }

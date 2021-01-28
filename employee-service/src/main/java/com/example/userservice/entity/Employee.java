@@ -1,18 +1,25 @@
 package com.example.userservice.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "employee")
 @Data
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
     private String login;
     private String firstName;
     private String lastName;
@@ -29,9 +36,9 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private List<Compensation> compensations;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Department department;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Company company;
 
 }

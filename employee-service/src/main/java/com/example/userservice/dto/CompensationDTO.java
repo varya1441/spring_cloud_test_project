@@ -3,15 +3,16 @@ package com.example.userservice.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Data
 public class CompensationDTO {
-    private String id;
-    private Timestamp effectiveDate;
-    private Double salaryPerHour;
+    private UUID id;
+    private OffsetDateTime effectiveDate;
+    private Double salaryPerHour;//rate
     private Double salaryPerWeek;
     private Double salaryPerMonth;
     @NotNull
-    private String employeeId;
+    private UUID employeeId;
 }

@@ -10,6 +10,8 @@ spring:
           uri: https://github.com/varya1441/spring_cloud_test_project
           search-paths:
           - 'config-dir/{application}/{profile}'
+          username: varya1441
+          password: varya143
 
   application:
     name: config-server
