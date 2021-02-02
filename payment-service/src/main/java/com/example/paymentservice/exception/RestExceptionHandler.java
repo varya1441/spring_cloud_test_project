@@ -58,7 +58,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                     .append(err.getField())
                     .append(" : ")
                     .append(err.getDefaultMessage())
-                    .append(System.getProperty("line.separator"));
+                    .append("    ");
         });
         return builder.toString();
     }
