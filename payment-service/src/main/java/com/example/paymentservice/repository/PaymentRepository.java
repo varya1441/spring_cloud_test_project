@@ -15,10 +15,9 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID>, JpaSpec
     @Query(value = "SELECT * FROM payment.public.payment where deleted=false", nativeQuery = true)
     List<Payment> findAllByEmployeeId(UUID id);
 
-    @Query(value = "SELECT * FROM payment.public.payment where deleted=false", nativeQuery = true)
     Payment findByFromDateAndToDate(OffsetDateTime fromDate, OffsetDateTime toDate);
 
-    @Query(value = "SELECT * FROM payment.public.payment WHERE from_date >= :fromDate AND to_date<=:toDate and employee_id=:employeeId", nativeQuery = true)
+    @Query(value = "SELECT * FROM payment.public.payment WHERE from_date >= :fromDate AND to_date<=:toDate and employee_id=:employeeId and deleted=false", nativeQuery = true)
     List<Payment> getEmployeePaymentsForPeriod(@Param("fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime fromDate,
                                                @Param("toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime toDate,
                                                @Param("employeeId") UUID employeeId);

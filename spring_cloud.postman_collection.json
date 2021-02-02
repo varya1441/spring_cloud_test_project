@@ -1,0 +1,607 @@
+{
+	"info": {
+		"_postman_id": "3e4d9685-77a6-4157-a257-8f2c7ccc7536",
+		"name": "spring_cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:9000/services/oauth/token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"access_token\", data.access_token);\r",
+							"postman.setGlobalVariable(\"refresh_token\", data.refresh_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "var",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "var",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "varya",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "pass1",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "var",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:9000/services/oauth/token",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"services",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{employee}}/employee",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\":\"varya\",\r\n  \"lastName\":\"tihonova\",\r\n\"login\":\"varya\",\r\n\"gender\":\"FEMALE\",\r\n\"status\":\"ACTIVE\",\r\n \"hiringDate\":\"1576800000\",\r\n\"terminationDate\":\"1608422400\",\r\n\"departmentId\":\"b6b1058a-a4e4-46dd-aaae-4214998c5d8f\",\r\n\"companyId\":\"60d38815-b35b-45b2-8562-4bdafb1622a9\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/employee",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{employee}}/department",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"r&d\",\r\n    \"description\":\"ml\",\r\n    \"companyId\":\"60d38815-b35b-45b2-8562-4bdafb1622a9\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/department",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"department"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{employee}}/company",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"forte\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/company",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"company"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{employee}}/address",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"addressLine1\":\"New York\",\r\n    \"addressLine2\":\"26 street\",\r\n    \"addressLine3\":\"54, 3\",\r\n    \"state\":\"New York\",\r\n    \"city\":\" New York\",\r\n    \"movingDate\":\"1608422400\",\r\n    \"zipCode\":\"NYC 311\",\r\n    \"employeeId\":\"53711342-9b42-42ee-a573-e3239301eec9\",\r\n    \"companyId\":\"60d38815-b35b-45b2-8562-4bdafb1622a9\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/address",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{employee}}/compensation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"effectiveDate\":\"\",\r\n  \"salaryPerHour\":\"\",\r\n  \r\n\r\n    \"employeeId\":\"53711342-9b42-42ee-a573-e3239301eec9\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/compensation",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"compensation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{employee}}/compensation/payment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fromDate\":\"157680000\",\r\n        \"toDate\":\"1657698900\"\r\n\r\n  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/compensation/payment",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"compensation",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{payment}}/payments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fromDate\":\"157680000\",\r\n    \"toDate\":\"1657698900\"\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{payment}}/payments",
+					"host": [
+						"{{payment}}"
+					],
+					"path": [
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{employee}}/employee/info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/employee/info/53711342-9b42-42ee-a573-e3239301eec9",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"employee",
+						"info",
+						"53711342-9b42-42ee-a573-e3239301eec9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{payment}}//payments/change-status/53711342-9b42-42ee-a573-e3239301eec9",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fromDate\":\"2018-01-12T10:30:13\",\r\n    \"toDate\":\"2021-02-01T22:31:15\"\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/payments/change-status/53711342-9b42-42ee-a573-e3239301eec9",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"payments",
+						"change-status",
+						"53711342-9b42-42ee-a573-e3239301eec9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{payment}}//payments/id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fromDate\":\"2018-01-12T10:30:13\",\r\n    \"toDate\":\"2021-02-01T22:31:15\"\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{payment}}/payments/change-status/53711342-9b42-42ee-a573-e3239301eec9",
+					"host": [
+						"{{payment}}"
+					],
+					"path": [
+						"payments",
+						"change-status",
+						"53711342-9b42-42ee-a573-e3239301eec9"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "tokenName",
+				"value": "access_token",
+				"type": "string"
+			},
+			{
+				"key": "password",
+				"value": "pass1",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "varya",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "var",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "read write",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "var",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "localhost:9000/services/oauth/token",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "password_credentials",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "employee",
+			"value": "localhost:8081"
+		},
+		{
+			"key": "payment",
+			"value": "localhost:8082"
+		}
+	]
+}
