@@ -9,6 +9,7 @@ import com.example.paymentservice.entity.Payment;
 import com.example.paymentservice.entity.PaymentMethod;
 import com.example.paymentservice.entity.Status;
 import com.example.paymentservice.mapper.PaymentEmployeeMapper;
+import com.example.paymentservice.repository.PaymentFiltration;
 import com.example.paymentservice.repository.PaymentRepository;
 import com.example.paymentservice.service.PaymentService;
 import com.example.paymentservice.utils.Converter;
@@ -54,11 +55,12 @@ public class PaymentServiceImpl implements PaymentService {
         OffsetDateTime fromDate = converter.convertToOffset(paymentRequest.getFromDate());
         OffsetDateTime toDate = converter.convertToOffset(paymentRequest.getToDate());
 
-        List<Payment> payments = paymentRepository.getEmployeePaymentsForPeriod(fromDate, toDate, employeeId);
+        List<Payment> payments = paymentRepository.findAll(PaymentFiltration.isEqualEmployeeId(employeeId).and(PaymentFiltration.isFromTo(fromDate,toDate)).and(PaymentFiltration.isNotDeleted()));
         log.info("Payments amount" + payments.size());
         for (Payment payment : payments) {
             payment.setStatus(payment.getStatus().equals(Status.PAID) ? Status.UNPAID : Status.PAID);
         }
+
         return payments;
     }
 
