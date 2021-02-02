@@ -1,23 +1,26 @@
 package com.example.userservice.service.impl;
 
+import com.example.userservice.controller.EmployeeServiceFeignClient;
 import com.example.userservice.dto.EmployeeDTO;
-import com.example.userservice.dto.payment.PaymentDTO;
+import com.example.userservice.dto.EmployeeInfo;
+import com.example.userservice.dto.payment.Payment;
 import com.example.userservice.entity.Company;
 import com.example.userservice.entity.Department;
 import com.example.userservice.entity.Employee;
+import com.example.userservice.mapper.EmployeeInfoMapper;
 import com.example.userservice.mapper.EmployeeMapper;
 import com.example.userservice.repository.EmployeeRepository;
+import com.example.userservice.service.AddressService;
 import com.example.userservice.service.CompanyService;
 import com.example.userservice.service.DepartmentService;
 import com.example.userservice.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -33,18 +36,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeMapper = employeeMapper;
         this.companyService = companyService;
         this.departmentService = departmentService;
+
     }
 
     @Override
-    public List<EmployeeDTO> getAllEmployee() {
-        List<Employee> employees = employeeRepository.findAll();
-        List<EmployeeDTO> employeeDTOs = employees.stream()
-                .map(employeeMapper::mapToDTO)
-                .collect(Collectors.toList());
-        return employeeDTOs;
+    public List<Employee> getAllEmployee() {
+        return employeeRepository.findAll();
     }
 
     @Override
+    @Transactional
     public EmployeeDTO saveEmployee(EmployeeDTO employeeDTO) {
         Employee employee = employeeMapper.mapToEntity(employeeDTO);
 
@@ -65,7 +66,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee findEmployeeById(UUID id) {
         return employeeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Employee.class + "with id " + id));
+                .orElseThrow(() -> {
+                    log.error(Employee.class + "with id " + id + " not found");
+                    return new EntityNotFoundException(Employee.class + "with id " + id);
+                });
     }
 
     @Override
@@ -80,6 +84,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDTO;
     }
 
+
+
     @Override
     public void delete(UUID id) {
         Employee user = employeeRepository.findById(id)
@@ -87,8 +93,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.delete(user);
     }
 
-    @Override
-    public PaymentDTO getPayments() {
-        return null;
-    }
+
 }

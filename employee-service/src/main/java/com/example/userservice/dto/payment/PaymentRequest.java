@@ -1,8 +1,9 @@
-package com.example.paymentservice.dto;
+package com.example.userservice.dto.payment;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 public class PaymentRequest {

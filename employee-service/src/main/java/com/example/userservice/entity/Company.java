@@ -27,4 +27,12 @@ public class Company {
     private List<Employee> employees;
     @OneToMany(mappedBy = "company")
     private List<Department> departments;
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

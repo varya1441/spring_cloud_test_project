@@ -28,7 +28,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     public Department findDepartmentById(UUID id) {
         return departmentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Department.class + "with id " + id));
+                .orElseThrow(() -> {
+                    log.error(Department.class + "with id " + id + " not found");
+                    return new EntityNotFoundException(Department.class + "with id " + id);
+                });
     }
 
     @Override

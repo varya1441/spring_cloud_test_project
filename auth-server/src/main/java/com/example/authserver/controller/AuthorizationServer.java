@@ -72,9 +72,9 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter im
         clients.inMemory()//client should be otherwise server wont start
                 .withClient("var")
                 .secret(passwordEncoder().encode("var"))
-                .authorizedGrantTypes("password").
-                scopes("read", "write");
-
-
+                .authorizedGrantTypes("password","refresh_token")
+                .scopes("read", "write")
+                .accessTokenValiditySeconds(120)
+                .refreshTokenValiditySeconds(240000);
     }
 }

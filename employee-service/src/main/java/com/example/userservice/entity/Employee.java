@@ -7,7 +7,12 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
-
+@NamedEntityGraph(
+        name = "compensation-employee-graph",
+        attributeNodes = {
+                @NamedAttributeNode("compensations")
+        }
+)
 @Entity
 @Table(name = "employee")
 @Data
@@ -41,4 +46,19 @@ public class Employee {
     @ManyToOne(cascade = CascadeType.ALL)
     private Company company;
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", gender=" + gender +
+                ", status=" + status +
+                ", hiringDate=" + hiringDate +
+                ", terminationDate=" + terminationDate +
+
+                '}';
+    }
 }

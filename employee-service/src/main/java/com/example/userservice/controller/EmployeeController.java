@@ -1,10 +1,11 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.dto.EmployeeDTO;
-import com.example.userservice.dto.payment.PaymentDTO;
+import com.example.userservice.dto.EmployeeInfo;
 import com.example.userservice.entity.Employee;
 import com.example.userservice.exception.RestExceptionHandler;
 import com.example.userservice.exception.ValidationException;
+import com.example.userservice.service.EmployeeInfoService;
 import com.example.userservice.service.EmployeeService;
 import com.example.userservice.validators.EmployeeValidator;
 import org.springframework.http.HttpStatus;
@@ -19,17 +20,19 @@ import java.util.UUID;
 @RestController
 public class EmployeeController {
 
+    private EmployeeInfoService employeeInfoService;
     private EmployeeService employeeService;
     private EmployeeValidator employeeValidator;
 
 
-    public EmployeeController(EmployeeService employeeService, EmployeeValidator employeeValidator) {
+    public EmployeeController(EmployeeInfoService employeeInfoService, EmployeeService employeeService, EmployeeValidator employeeValidator) {
+        this.employeeInfoService = employeeInfoService;
         this.employeeService = employeeService;
         this.employeeValidator = employeeValidator;
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
+    public ResponseEntity<List<Employee>> getAllEmployees() {
         return new ResponseEntity<>(employeeService.getAllEmployee(), HttpStatus.OK);
     }
 
@@ -47,20 +50,24 @@ public class EmployeeController {
         }
         return new ResponseEntity<>(employeeService.saveEmployee(employeeDTO), HttpStatus.OK);
     }
+
     @GetMapping("/employee/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Employee> findById(@PathVariable UUID id) {
         return new ResponseEntity<>(employeeService.findEmployeeById(id), HttpStatus.OK);
     }
+
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         employeeService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping(value = "/payment")
-    public ResponseEntity<PaymentDTO> getPayments(){
-        return new ResponseEntity<>(employeeService.getPayments(),HttpStatus.OK);
+
+    @GetMapping(value = "/employee/info/{employeeId}")
+    public ResponseEntity<EmployeeInfo> getEmployeeInfo(@PathVariable UUID employeeId) {
+        return new ResponseEntity<>(employeeInfoService.getEmployeeInfo(employeeId), HttpStatus.OK);
     }
+
 
 }

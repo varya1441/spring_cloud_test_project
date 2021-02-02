@@ -6,12 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.UUID;
-@NamedEntityGraph(
-        name = "compensation-employee-graph",
-        attributeNodes = {
-                @NamedAttributeNode("employee")
-        }
-)
+
 @Entity
 @Data
 public class Compensation {
@@ -29,4 +24,16 @@ public class Compensation {
     private Double salaryPerMonth;
     @ManyToOne(cascade = CascadeType.ALL)
     private Employee employee;
+
+    @Override
+    public String toString() {
+        return "Compensation{" +
+                "id=" + id +
+                ", effectiveDate=" + effectiveDate +
+                ", salaryPerHour=" + salaryPerHour +
+                ", salaryPerWeek=" + salaryPerWeek +
+                ", salaryPerMonth=" + salaryPerMonth +
+                ", employeeid=" + employee.getId() +
+                '}';
+    }
 }

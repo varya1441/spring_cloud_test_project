@@ -1,15 +1,17 @@
 package com.example.userservice.controller;
 
-import com.example.userservice.dto.payment.PaymentDTO;
+import com.example.userservice.dto.payment.Payment;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+import java.util.UUID;
 
 @FeignClient(name = "payment-service")
 public interface EmployeeServiceFeignClient {
 
-    @GetMapping(value = "/payment/{id}")
-    PaymentDTO getPayment(@RequestBody PaymentDTO paymentDTO, @PathVariable String id);
+    @GetMapping(value = "/payments/{employeeId}")
+    List<Payment> getPayment(@PathVariable UUID employeeId);
 
 }

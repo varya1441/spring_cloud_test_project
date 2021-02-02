@@ -1,16 +1,21 @@
 package com.example.paymentservice.service;
 
-import com.example.paymentservice.dto.PaymentDTO;
+import com.example.paymentservice.dto.PaymentEmployeeInfo;
+import com.example.paymentservice.dto.PaymentRequest;
 import com.example.paymentservice.entity.Payment;
 
-import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
 public interface PaymentService {
     Payment findByPaymentId(UUID id);
 
-    PaymentDTO calculatePayment(PaymentDTO paymentDTO, UUID employeeId);
+    List<Payment> getPayments(PaymentRequest paymentRequest);
 
-    void changePaymentStatus(UUID employeeId, OffsetDateTime effectiveDate);
+    List<PaymentEmployeeInfo> findByEmployeeId(UUID employeeId);
+
+    void delete(UUID id);
+
+    List<Payment> changePaymentStatus(UUID employeeId, PaymentRequest paymentRequest);
 }

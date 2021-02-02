@@ -1,3 +1,37 @@
+PUT http://localhost:8082/payments/status/{employeeId}
+
+###
+
+PUT http://localhost/payments/status/{{employeeId}}
+
+###
+
+PUT http://localhost:8082/payments/status/{employeeId}
+
+###
+
+PUT http://localhost:8082/payments/status/{employeeId}
+
+###
+
+POST http://localhost:8082/payments/status/{id}
+
+###
+
+POST http://localhost:8082/payments
+
+<> 2021-02-01T111844.401.json
+
+###
+
+POST http://localhost:8082/payments/status/{id}
+
+###
+
+POST http://localhost:8082/payments/status/{id}
+
+###
+
 POST http://localhost:8081/address
 
 <> 2021-01-27T114809.401.json

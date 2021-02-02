@@ -26,4 +26,10 @@ ribbon:
   eureka:
     enabled: true
 
+payment-service:
+    ribbon:
+      listOfServers: http://localhost:8082
+
+
+
 

@@ -26,3 +26,7 @@ ribbon:
   MaxAutoRetriesNextServer: 3
   eureka:
     enabled: true
+
+employee-service:
+  ribbon:
+    listOfServers: http://localhost:8081

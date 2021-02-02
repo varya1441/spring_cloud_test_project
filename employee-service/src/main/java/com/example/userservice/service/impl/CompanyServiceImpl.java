@@ -30,7 +30,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     public Company findCompanyById(UUID id) {
         return companyRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Company.class + "with id " + id));
+                .orElseThrow(() -> {
+                    log.error(Company.class + "with id " + id + " not found");
+                    return new EntityNotFoundException(Company.class + "with id " + id);
+                });
     }
 
     @Override

@@ -25,4 +25,13 @@ public class Department {
     private List<Employee> employee;
     @ManyToOne(cascade = CascadeType.ALL)
     private Company company;
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

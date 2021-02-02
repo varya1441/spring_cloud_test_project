@@ -1,6 +1,8 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.dto.CompensationDTO;
+import com.example.userservice.dto.payment.PaymentDTO;
+import com.example.userservice.dto.payment.PaymentRequest;
 import com.example.userservice.exception.RestExceptionHandler;
 import com.example.userservice.exception.ValidationException;
 import com.example.userservice.service.CompensationService;
@@ -10,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.OffsetDateTime;
 
 @RestController
 public class CompensationController {
@@ -33,8 +37,8 @@ public class CompensationController {
         return new ResponseEntity<>(compensationService.saveCompensation(compensationDTO), HttpStatus.OK);
     }
 
-//    @GetMapping("/compensation/{id}")
-//    public ResponseEntity<PaymentDTO> getEmployeeCompensation(@PathVariable UUID id) {
-//        return new ResponseEntity<>(compensationService.getPaymentInfo(id), HttpStatus.OK);
-//    }
+    @PostMapping("/compensation/payment")
+    public ResponseEntity<PaymentDTO> getEmployeeCompensation(@RequestBody PaymentRequest paymentRequest) {
+        return new ResponseEntity<>(compensationService.getPaymentInfo(paymentRequest), HttpStatus.OK);
+    }
 }

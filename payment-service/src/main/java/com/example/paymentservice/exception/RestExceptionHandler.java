@@ -3,6 +3,7 @@ package com.example.paymentservice.exception;
 import feign.FeignException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,16 +13,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(InvocationTargetException.class)
+    protected ResponseEntity<ExceptionEntity> handleExpiredJwtException(InvocationTargetException e) {
+        return new ResponseEntity<>(new ExceptionEntity(new String(e.getMessage())), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(FeignException.class)
     protected ResponseEntity<ExceptionEntity> handleExpiredFeign(FeignException e) {
         return new ResponseEntity<>(new ExceptionEntity(new String(e.content())), HttpStatus.resolve(e.status()));
     }
+
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<ExceptionEntity> handleEntity(EntityNotFoundException ex) {
         return new ResponseEntity<>(new ExceptionEntity(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,6 +39,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ExceptionEntity(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(NotReadablePropertyException.class)
+    protected ResponseEntity<ExceptionEntity> handleDatabaseFindException(NotReadablePropertyException ex) {
+        return new ResponseEntity<>(new ExceptionEntity(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @Data
     @AllArgsConstructor
@@ -39,9 +50,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         private String message;
     }
 
-    public static String createExceptionMessage(List<ObjectError> errors){
+    public static String createExceptionMessage(List<ObjectError> errors) {
         StringBuilder builder = new StringBuilder();
-        errors.forEach((error)->{
+        errors.forEach((error) -> {
             FieldError err = (FieldError) error;
             builder.append("Field - ")
                     .append(err.getField())

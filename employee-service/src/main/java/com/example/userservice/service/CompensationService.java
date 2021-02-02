@@ -2,6 +2,7 @@ package com.example.userservice.service;
 
 import com.example.userservice.dto.CompensationDTO;
 import com.example.userservice.dto.payment.PaymentDTO;
+import com.example.userservice.dto.payment.PaymentRequest;
 import com.example.userservice.entity.Compensation;
 
 import java.time.OffsetDateTime;
@@ -12,5 +13,5 @@ public interface CompensationService {
 
     CompensationDTO saveCompensation(CompensationDTO compensationDTO);
 
-    PaymentDTO getPaymentInfo(OffsetDateTime fromDate, OffsetDateTime toDate);
+    PaymentDTO getPaymentInfo(PaymentRequest paymentRequest);
 }

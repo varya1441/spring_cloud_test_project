@@ -22,4 +22,21 @@ public class AddressDTO {
     private UUID employeeId;
     @NotNull(message = "company not found")
     private UUID companyId;
+
+    @Override
+    public String toString() {
+        return "AddressDTO{" +
+                "id=" + id +
+                ", addressLine1='" + addressLine1 + '\'' +
+                ", addressLine2='" + addressLine2 + '\'' +
+                ", addressLine3='" + addressLine3 + '\'' +
+                ", state='" + state + '\'' +
+                ", city='" + city + '\'' +
+                ", movingDate=" + movingDate +
+                ", leavingDate=" + leavingDate +
+                ", zipCode='" + zipCode + '\'' +
+                ", employeeId=" + employeeId +
+                ", companyId=" + companyId +
+                '}';
+    }
 }

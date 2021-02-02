@@ -33,4 +33,21 @@ public class Address {
     private Employee employee;
     @ManyToOne(cascade = CascadeType.ALL)
     private Company company;
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", addressLine1='" + addressLine1 + '\'' +
+                ", addressLine2='" + addressLine2 + '\'' +
+                ", addressLine3='" + addressLine3 + '\'' +
+                ", state='" + state + '\'' +
+                ", city='" + city + '\'' +
+                ", movingDate=" + movingDate +
+                ", leavingDate=" + leavingDate +
+                ", zipCode='" + zipCode + '\'' +
+                ", employee=" + employee.getId() +
+                ", company=" + company.getId() +
+                '}';
+    }
 }

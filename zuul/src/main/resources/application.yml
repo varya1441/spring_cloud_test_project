@@ -26,6 +26,8 @@ zuul:
     auth:
       path: /oauth/**
       serviceId: auth-server
+      strip-prefix: false
+      sensitive-headers: Cookie,Set-Cookie
 security:
   oauth2:
     client:

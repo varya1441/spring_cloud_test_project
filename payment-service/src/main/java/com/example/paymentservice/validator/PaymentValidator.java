@@ -9,14 +9,14 @@ import org.springframework.validation.Validator;
 @Service
 public class PaymentValidator implements Validator {
 
-        @Override
-        public boolean supports(Class<?> aClass) {
-            return PaymentDTO.class.equals(aClass);
-        }
+    @Override
+    public boolean supports(Class<?> aClass) {
+        return PaymentDTO.class.equals(aClass);
+    }
 
-        @Override
-        public void validate(Object obj, Errors errors) {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required");
-        }
+    @Override
+    public void validate(Object obj, Errors errors) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required");
+    }
 
 }
