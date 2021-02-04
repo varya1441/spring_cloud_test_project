@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public interface PaymentRepository extends JpaRepository<Payment, UUID>, JpaSpecificationExecutor {
+public interface PaymentRepository extends JpaRepository<Payment, UUID>, JpaSpecificationExecutor<Payment> {
     @Query(value = "SELECT * FROM payment.public.payment where deleted=false", nativeQuery = true)
     List<Payment> findAllByEmployeeId(UUID id);
 

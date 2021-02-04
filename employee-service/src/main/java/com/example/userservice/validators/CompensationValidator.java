@@ -6,7 +6,6 @@ import com.netflix.discovery.shared.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 
 import java.time.OffsetDateTime;
 
@@ -26,17 +25,15 @@ public class CompensationValidator implements General {
     @Override
     public void validate(Object obj, Errors errors) {
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "effectiveDate", "field.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "salaryPerHour", "field.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "employeeId", "field.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "effectiveDate", "field.required", "effectiveDate is null ");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "salaryPerHour", "field.required", "salaryPerHour is null");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "employeeId", "field.required", "employeeId is null");
 
         CompensationDTO compensationDTO = (CompensationDTO) obj;
-        customValidator.compareProperties(errors,
-                new Pair<>("EffectiveDate",compensationDTO.getEffectiveDate()),
-                new Pair<>("now",OffsetDateTime.now()));
-
-        if (compensationDTO.getEmployeeId().toString().length() < ID_LENGTH) {
-            errors.rejectValue("id", "too.short", new Object[]{"'employeeId'"}, "id length should be > 6");
+        if (compensationDTO.getEffectiveDate() != null) {
+            customValidator.compareProperties(errors,
+                    new Pair<>("EffectiveDate", compensationDTO.getEffectiveDate()),
+                    new Pair<>("now", OffsetDateTime.now()));
         }
     }
 

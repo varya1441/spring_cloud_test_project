@@ -13,6 +13,5 @@ public class CompensationDTO {
     private Double salaryPerHour;//rate
     private Double salaryPerWeek;
     private Double salaryPerMonth;
-    @NotNull
     private UUID employeeId;
 }

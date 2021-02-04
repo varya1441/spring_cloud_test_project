@@ -1,0 +1,50 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: zuul-proxy
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+zuul:
+  sensitive-headers: Cookie,Set-Cookie
+  routes:
+    employee:
+      path: /employee/**
+      serviceId: employee-service
+      strip-prefix: false
+      methods:
+        - POST
+        - PUT
+        - PATCH
+    payment:
+      path: /payment/**
+      serviceId: payment-service
+      strip-prefix: false
+      methods:
+        - POST
+        - PUT
+        - PATCH
+    auth:
+      path: /oauth/**
+      serviceId: auth-server
+      strip-prefix: false
+#oauth2:
+#  client:
+#    clientId: var
+#    clientSecret: var
+
+#ribbon:
+#  OkToRetryOnAllOperations: true
+#  ReadTimeout: 3000000
+#  ConnectTimeout: 3000000
+#  MaxAutoRetries: 3
+#  MaxAutoRetriesNextServer: 3
+#  eureka:
+#    enabled: true

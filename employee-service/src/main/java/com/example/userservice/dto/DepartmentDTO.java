@@ -10,6 +10,5 @@ public class DepartmentDTO{
     private UUID id;
     private String name;
     private String description;
-    @NotNull
     private UUID companyId;
 }

@@ -25,19 +25,19 @@ public class CompensationController {
         this.compensationValidator = compensationValidator;
     }
 
-    @PostMapping("/compensation")
+    @PostMapping("/employee/compensation")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<CompensationDTO> saveEmployeeCompensation(@RequestBody CompensationDTO compensationDTO, BindingResult bindingResult) {
         compensationValidator.validate(compensationDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            throw new ValidationException(RestExceptionHandler.createExceptionMessage(bindingResult.getAllErrors()));
+            throw new ValidationException(bindingResult);
         }
 
         return new ResponseEntity<>(compensationService.saveCompensation(compensationDTO), HttpStatus.OK);
     }
 
-    @PostMapping("/compensation/payment")
+    @PostMapping("/employee/compensation/payment")
     public ResponseEntity<PaymentDTO> getEmployeeCompensation(@RequestBody PaymentRequest paymentRequest) {
         return new ResponseEntity<>(compensationService.getPaymentInfo(paymentRequest), HttpStatus.OK);
     }

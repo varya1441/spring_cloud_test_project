@@ -9,12 +9,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableResourceServer
 @EnableFeignClients
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true,
-        securedEnabled = true,
-        jsr250Enabled = true)
 public class PaymentServiceApplication {
 
     public static void main(String[] args) {

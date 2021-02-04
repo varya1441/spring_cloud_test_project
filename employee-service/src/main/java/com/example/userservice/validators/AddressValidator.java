@@ -12,7 +12,6 @@ import java.time.OffsetDateTime;
 @Service
 public class AddressValidator implements Validator {
     private final CustomValidator customValidator;
-    private static final int ID_LENGTH = 36;
 
     public AddressValidator(CustomValidator customValidator) {
         this.customValidator = customValidator;
@@ -26,31 +25,28 @@ public class AddressValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "addressLine1", "field.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "employeeId", "field.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "companyId", "field.required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "movingDate", "field.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "addressLine1", "field.required","addressLine1 is null");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "employeeId", "field.required","employeeId is null");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "companyId", "field.required","companyId is null");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "movingDate", "field.required","movingDate is null");
 
         AddressDTO addressDTO = (AddressDTO) obj;
         OffsetDateTime movingDate = addressDTO.getMovingDate();
         OffsetDateTime leavingDate = addressDTO.getLeavingDate();
-
-        customValidator.compareProperties(errors,
-                new Pair<>("MovingDate", movingDate),
-                new Pair<>("now", OffsetDateTime.now()));
-        if (leavingDate != null) {
-            customValidator.compareProperties(errors,
-                    new Pair<>("LeavingDate", leavingDate),
-                    new Pair<>("now", OffsetDateTime.now()));
-
+        if (movingDate != null) {
             customValidator.compareProperties(errors,
                     new Pair<>("MovingDate", movingDate),
-                    new Pair<>("LeavingDate", leavingDate));
+                    new Pair<>("now", OffsetDateTime.now()));
+            if (leavingDate != null) {
+                customValidator.compareProperties(errors,
+                        new Pair<>("LeavingDate", leavingDate),
+                        new Pair<>("now", OffsetDateTime.now()));
+
+                customValidator.compareProperties(errors,
+                        new Pair<>("MovingDate", movingDate),
+                        new Pair<>("LeavingDate", leavingDate));
+            }
         }
 
-        if (addressDTO.getCompanyId().toString().length() < ID_LENGTH ||
-                addressDTO.getEmployeeId().toString().length() < ID_LENGTH) {
-            errors.rejectValue("id", "too.short", new Object[]{"'id'"}, "id length should be > 6");
-        }
     }
 }

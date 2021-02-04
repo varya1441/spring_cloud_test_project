@@ -31,12 +31,12 @@ public class EmployeeController {
         this.employeeValidator = employeeValidator;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/employee/all")
     public ResponseEntity<List<Employee>> getAllEmployees() {
         return new ResponseEntity<>(employeeService.getAllEmployee(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/login/{login}")
+    @GetMapping(value = "/employee/login/{login}")
     public ResponseEntity<EmployeeDTO> getByLogin(@PathVariable String login) {
         return new ResponseEntity<>(employeeService.findByLogin(login), HttpStatus.OK);
     }
@@ -46,7 +46,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> saveEmployee(@RequestBody EmployeeDTO employeeDTO, BindingResult bindingResult) {
         employeeValidator.validate(employeeDTO, bindingResult);
         if (bindingResult.hasErrors()) {
-            throw new ValidationException(RestExceptionHandler.createExceptionMessage(bindingResult.getAllErrors()));
+            throw new ValidationException(bindingResult);
         }
         return new ResponseEntity<>(employeeService.saveEmployee(employeeDTO), HttpStatus.OK);
     }
@@ -57,7 +57,7 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeService.findEmployeeById(id), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/employee/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         employeeService.delete(id);

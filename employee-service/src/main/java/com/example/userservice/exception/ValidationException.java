@@ -1,15 +1,23 @@
 package com.example.userservice.exception;
 
+import lombok.Data;
+import org.springframework.validation.BindingResult;
+
+import java.util.List;
+
+
 public class ValidationException extends RuntimeException {
-    public ValidationException(String msg, Throwable t) {
-        super(msg, t);
+    private BindingResult bindingResult;
+
+    public ValidationException(BindingResult bindingResult) {
+        this.bindingResult = bindingResult;
     }
 
-    public ValidationException(String msg) {
-        super(msg);
+    public BindingResult getBindingResult() {
+        return bindingResult;
     }
 
-    public ValidationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public void setBindingResult(BindingResult bindingResult) {
+        this.bindingResult = bindingResult;
     }
 }

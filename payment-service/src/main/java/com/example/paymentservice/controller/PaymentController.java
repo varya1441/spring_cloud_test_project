@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-
 public class PaymentController {
     private PaymentRequestValidator paymentRequestValidator;
     private PaymentService paymentService;

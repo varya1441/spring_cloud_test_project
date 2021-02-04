@@ -25,13 +25,13 @@ public class DepartmentController {
         this.departmentValidator = departmentValidator;
     }
 
-    @PostMapping("/department")
+    @PostMapping("/employee/department")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<DepartmentDTO> saveUserDepartment(@RequestBody DepartmentDTO departmentDTO, BindingResult bindingResult) {
         departmentValidator.validate(departmentDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            throw new ValidationException(RestExceptionHandler.createExceptionMessage(bindingResult.getAllErrors()));
+            throw new ValidationException(bindingResult);
         }
 
         return new ResponseEntity<>(departmentService.saveDepartment(departmentDTO), HttpStatus.OK);

@@ -32,6 +32,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final Converter converter;
     private final EmployeeServiceFeignClient employeeServiceFeignClient;
     private final PaymentEmployeeMapper paymentEmployeeMapper;
+    private final static int HOURS_PER_DAY = 8;
 
     public PaymentServiceImpl(PaymentRepository paymentRepository, Converter converter, EmployeeServiceFeignClient employeeServiceFeignClient, PaymentEmployeeMapper paymentEmployeeMapper) {
         this.paymentRepository = paymentRepository;
@@ -55,7 +56,7 @@ public class PaymentServiceImpl implements PaymentService {
         OffsetDateTime fromDate = converter.convertToOffset(paymentRequest.getFromDate());
         OffsetDateTime toDate = converter.convertToOffset(paymentRequest.getToDate());
 
-        List<Payment> payments = paymentRepository.findAll(PaymentFiltration.isEqualEmployeeId(employeeId).and(PaymentFiltration.isFromTo(fromDate,toDate)).and(PaymentFiltration.isNotDeleted()));
+        List<Payment> payments = paymentRepository.findAll(PaymentFiltration.isEqualEmployeeId(employeeId).and(PaymentFiltration.isFromTo(fromDate, toDate)).and(PaymentFiltration.isNotDeleted()));
         log.info("Payments amount" + payments.size());
         for (Payment payment : payments) {
             payment.setStatus(payment.getStatus().equals(Status.PAID) ? Status.UNPAID : Status.PAID);
@@ -125,7 +126,7 @@ public class PaymentServiceImpl implements PaymentService {
     public void getCompensationPayment(OffsetDateTime fromDate, OffsetDateTime toDate, List<Payment> payments, Map.Entry<UUID, List<CompensationPaymentDTO>> paymentEntry, CompensationPaymentDTO beforeCompensationPayment) {
         long days = DAYS.between(fromDate, toDate);
         double rate = beforeCompensationPayment.getSalaryPerHour();
-        double wages = days * rate;
+        double wages = days * rate*HOURS_PER_DAY;
         Payment payment = new Payment(wages, PaymentMethod.INVOICE, Status.UNPAID, fromDate, toDate, (int) days, rate, paymentEntry.getKey());
 
         paymentRepository.save(payment);

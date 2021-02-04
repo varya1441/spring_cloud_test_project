@@ -2,10 +2,8 @@ package com.example.userservice.dto;
 
 import com.example.userservice.entity.Gender;
 import com.example.userservice.entity.Status;
-import com.example.userservice.validators.ValidUuid;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -19,9 +17,7 @@ public class EmployeeDTO {
     private Status status;
     private OffsetDateTime hiringDate;
     private OffsetDateTime terminationDate;
-    @ValidUuid
     private UUID departmentId;
-    @ValidUuid
     private UUID companyId;
 
 }

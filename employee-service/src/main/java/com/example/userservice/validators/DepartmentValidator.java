@@ -15,13 +15,8 @@ public class DepartmentValidator implements General {
 
         @Override
         public void validate(Object obj, Errors errors) {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required");
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "companyId", "field.required");
-
-            DepartmentDTO departmentDTO = (DepartmentDTO) obj;
-            if (departmentDTO.getCompanyId().toString().length() < ID_LENGTH) {
-                errors.rejectValue("id", "too.short", new Object[]{"'id'"}, "id length should be > 6");
-            }
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required"," name is null");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "companyId", "field.required","companyId is null");
         }
 
 }

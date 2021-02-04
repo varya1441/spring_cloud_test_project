@@ -25,13 +25,13 @@ public class CompanyController {
         this.companyValidator = companyValidator;
     }
 
-    @PostMapping("/company")
+    @PostMapping("/employee/company")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CompanyDTO> saveUserAddress(@RequestBody CompanyDTO companyDTO, BindingResult bindingResult) {
+    public ResponseEntity<CompanyDTO> saveCompany(@RequestBody CompanyDTO companyDTO, BindingResult bindingResult) {
         companyValidator.validate(companyDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            throw new ValidationException(RestExceptionHandler.createExceptionMessage(bindingResult.getAllErrors()));
+            throw new ValidationException(bindingResult);
         }
 
         return new ResponseEntity<>(companyService.saveCompany(companyDTO), HttpStatus.OK);

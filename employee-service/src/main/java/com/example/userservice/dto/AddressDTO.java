@@ -18,9 +18,7 @@ public class AddressDTO {
     private OffsetDateTime movingDate;
     private OffsetDateTime leavingDate;
     private String zipCode;
-    @NotNull(message = "employee not found")
     private UUID employeeId;
-    @NotNull(message = "company not found")
     private UUID companyId;
 
     @Override

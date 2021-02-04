@@ -17,7 +17,7 @@ public class CompanyValidator implements Validator {
 
         @Override
         public void validate(Object obj, Errors errors) {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "field.required","name is null");
 
         }
 
